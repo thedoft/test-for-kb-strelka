@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { NavLink } from 'react-router-dom';
 import mapboxgl from 'mapbox-gl';
 
 import PointList from './PointList';
@@ -13,9 +14,9 @@ export default function Map(props) {
   const mapContainer = useRef();
 
   const [mapState, setMapState] = useState({
-    lng: 5,
-    lat: 34,
-    zoom: 2,
+    lng: 20.5101,
+    lat: 54.7101,
+    zoom: 12.00,
   });
 
   useEffect(() => {
@@ -38,6 +39,12 @@ export default function Map(props) {
   return (
     <div className="map">
       <div className="map__left-column">
+        <div style={{position: 'sticky', top: 0, backgroundColor: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px', borderBottom: '#000 1px solid'}}>
+          <h1 style={{margin: 0}}>Список мест</h1>
+          <NavLink to="/">
+            <button style={{height: 50, width: 100, margin: 0, padding: 0}}>Назад</button>
+          </NavLink>
+        </div>
         <PointList points={points} />
       </div>
       <p style={{display: 'inline-block', backgroundColor: '#fff', position: 'absolute', top: 0, right: '10px', zIndex: 1}}>Longitude: {mapState.lng} | Latitude: {mapState.lat} | Zoom: {mapState.zoom}</p>
