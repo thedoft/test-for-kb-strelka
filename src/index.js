@@ -9,7 +9,7 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.NODE_ENV === 'production' ? '/test-for-kb-strelka' : '/'}>
       <App />
     </BrowserRouter>
   </React.StrictMode>,
