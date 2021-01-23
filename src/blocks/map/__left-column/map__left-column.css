@@ -1,4 +1,5 @@
 .map__left-column {
   width: 30%;
   border-right: #000 1px solid;
+  overflow: scroll;
 }

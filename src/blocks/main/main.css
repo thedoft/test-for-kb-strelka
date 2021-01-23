@@ -3,6 +3,7 @@
 .main {
   font-family: 'Poppins', sans-serif;
   max-width: 1920px;
+  height: 1px;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
