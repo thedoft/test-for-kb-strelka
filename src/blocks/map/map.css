@@ -1,0 +1,8 @@
+@import './__left-column/map__left-column.css';
+@import './__right-column/map__right-column.css';
+
+.map {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
