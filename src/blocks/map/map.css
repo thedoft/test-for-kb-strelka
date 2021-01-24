@@ -1,5 +1,9 @@
 @import './__left-column/map__left-column.css';
 @import './__right-column/map__right-column.css';
+@import './__header/map__header.css';
+@import './__title/map__title.css';
+@import './__back-button/map__back-button.css';
+@import './__coordinates/map__coordinates.css';
 
 .map {
   display: flex;

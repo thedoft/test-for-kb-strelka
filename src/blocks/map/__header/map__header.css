@@ -1,0 +1,10 @@
+.map__header {
+  position: sticky;
+  top: 0;
+  background-color: #FFE4B5	;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: #000 1px solid;
+}

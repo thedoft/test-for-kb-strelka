@@ -5,9 +5,10 @@ export default function Home() {
   return (
     <div className="home">
       <h1 className="home__title">Туристические точки притяжения Калиниграда</h1>
-      <NavLink to="/map">
-        <button className="home__button">Перейти к карте</button>
+      <NavLink className="home__navlink" to="/map">
+        <button className="button home__button">Перейти к карте</button>
       </NavLink>
+      <div className="home__overlay" />
     </div>
   );
 }

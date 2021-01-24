@@ -1,0 +1,8 @@
+.map__coordinates {
+  display: inline-block;
+  background-color: #fff;
+  position: absolute;
+  top: 0;
+  right: 10px;
+  z-index: 1;
+}

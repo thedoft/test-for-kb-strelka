@@ -83,17 +83,17 @@ export default function Map() {
   return (
     <div className="map">
       <div className="map__left-column">
-        <div style={{position: 'sticky', top: 0, backgroundColor: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px', borderBottom: '#000 1px solid'}}>
-          <h1 style={{margin: 0}}>Список мест</h1>
+        <div className="map__header">
+          <h1 className="map__title">Список мест</h1>
           <NavLink to="/">
-            <button style={{height: 50, width: 100, margin: 0, padding: 0}}>Назад</button>
+            <button className="button map__back-button">Назад</button>
           </NavLink>
         </div>
         <PointList points={points} onPointClick={handlePointClick} />
       </div>
 
       <div className="map__right-column" ref={mapContainer}>
-        <p style={{display: 'inline-block', backgroundColor: '#fff', position: 'absolute', top: 0, right: '10px', zIndex: 1}}>Longitude: {mapState.lng} | Latitude: {mapState.lat} | Zoom: {mapState.zoom}</p>
+        <p className="map__coordinates">Долгота: {mapState.lng} | Широта: {mapState.lat} | Зум: {mapState.zoom}</p>
       </div>
     </div>
   );

@@ -1,3 +1,6 @@
 @import './blocks/main/main.css';
+@import './blocks/button/button.css';
 @import './blocks/home/home.css';
 @import './blocks/map/map.css';
+@import './blocks/point-list/point-list.css';
+@import './blocks/point/point.css';

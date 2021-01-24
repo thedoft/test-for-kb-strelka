@@ -1,0 +1,11 @@
+.map__back-button {
+  height: 50px;
+  width: 100px;
+  border: #000 1px solid;
+  transition: box-shadow .25s ease;
+}
+
+.map__back-button:hover {
+  box-shadow: #000 0 0 2px;
+  transition: box-shadow .25s ease;
+}

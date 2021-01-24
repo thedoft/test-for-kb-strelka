@@ -1,0 +1,16 @@
+.button {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, .9);
+  border: none;
+  border-radius: 30px;
+  outline: none;
+  transition: background-color .5s ease;
+}
+
+.button:hover {
+  background-color: rgba(255, 255, 255, .75);
+  transition: background-color .5s ease;
+}
