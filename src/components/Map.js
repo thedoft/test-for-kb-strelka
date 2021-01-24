@@ -8,7 +8,7 @@ import * as pointCollection from '../points.json';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoidGhlZG9mdCIsImEiOiJja2thMjl0aGwwMG9yMndwaWY4M2ptZHBvIn0.8EEq1Pq2hDrZUuIlupJBdQ';
 
-export default function Map(props) {
+export default function Map() {
   const points = pointCollection.features;
 
   const mapContainer = useRef(null);
@@ -16,8 +16,12 @@ export default function Map(props) {
   const [mapState, setMapState] = useState({
     lng: 20.5101,
     lat: 54.7101,
-    zoom: 12.00,
+    zoom: 11.00,
   });
+
+  const handlePointClick = (point) => {
+
+  };
 
   useEffect(() => {
     const map = new mapboxgl.Map({
@@ -26,8 +30,6 @@ export default function Map(props) {
       center: [mapState.lng, mapState.lat],
       zoom: mapState.zoom,
     });
-
-    map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
 
     map.on('load', () => {
       map.addSource('points', {
@@ -39,11 +41,9 @@ export default function Map(props) {
         id: 'points',
         type: 'symbol',
         source: 'points',
-        layout: {
-          "icon-image": "{marker-symbol}",
-          "text-field": "{title}",
-        }
       });
+
+      map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
     });
 
     map.on('move', () => {
@@ -55,10 +55,13 @@ export default function Map(props) {
     });
 
     points.forEach((point) => {
-      const [lng, lat] = point.geometry.coordinates;
+      const [ lng, lat ] = point.geometry.coordinates;
+      const { name, rating } = point.properties;
+      const popup = new mapboxgl.Popup({ closeButton: false }).setText(`${name}, рейтинг: ${rating}`);
 
       new mapboxgl.Marker()
-        .setLngLat([lng, lat])
+        .setLngLat([ lng, lat ])
+        .setPopup(popup)
         .addTo(map);
     });
 
@@ -74,10 +77,12 @@ export default function Map(props) {
             <button style={{height: 50, width: 100, margin: 0, padding: 0}}>Назад</button>
           </NavLink>
         </div>
-        <PointList points={points} />
+        <PointList points={points} onPointClick={handlePointClick} />
       </div>
-      <p style={{display: 'inline-block', backgroundColor: '#fff', position: 'absolute', top: 0, right: '10px', zIndex: 1}}>Longitude: {mapState.lng} | Latitude: {mapState.lat} | Zoom: {mapState.zoom}</p>
-      <div className="map__right-column" ref={mapContainer} />
+
+      <div className="map__right-column" ref={mapContainer}>
+        <p style={{display: 'inline-block', backgroundColor: '#fff', position: 'absolute', top: 0, right: '10px', zIndex: 1}}>Longitude: {mapState.lng} | Latitude: {mapState.lat} | Zoom: {mapState.zoom}</p>
+      </div>
     </div>
   );
 }
