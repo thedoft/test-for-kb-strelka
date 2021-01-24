@@ -11,7 +11,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoidGhlZG9mdCIsImEiOiJja2thMjl0aGwwMG9yMndwaWY4M
 export default function Map(props) {
   const points = pointCollection.features;
 
-  const mapContainer = useRef();
+  const mapContainer = useRef(null);
 
   const [mapState, setMapState] = useState({
     lng: 20.5101,
@@ -27,6 +27,25 @@ export default function Map(props) {
       zoom: mapState.zoom,
     });
 
+    map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+
+    map.on('load', () => {
+      map.addSource('points', {
+        type: 'geojson',
+        data: pointCollection.default,
+      });
+
+      map.addLayer({
+        id: 'points',
+        type: 'symbol',
+        source: 'points',
+        layout: {
+          "icon-image": "{marker-symbol}",
+          "text-field": "{title}",
+        }
+      });
+    });
+
     map.on('move', () => {
       setMapState({
         lng: map.getCenter().lng.toFixed(4),
@@ -34,7 +53,17 @@ export default function Map(props) {
         zoom: map.getZoom().toFixed(2)
       });
     });
-  }, []);
+
+    points.forEach((point) => {
+      const [lng, lat] = point.geometry.coordinates;
+
+      new mapboxgl.Marker()
+        .setLngLat([lng, lat])
+        .addTo(map);
+    });
+
+      return () => map.remove();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="map">
