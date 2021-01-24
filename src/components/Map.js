@@ -13,6 +13,7 @@ export default function Map() {
 
   const mapContainer = useRef(null);
 
+  const [map, setMap] = useState(null);
   const [mapState, setMapState] = useState({
     lng: 20.5101,
     lat: 54.7101,
@@ -20,7 +21,13 @@ export default function Map() {
   });
 
   const handlePointClick = (point) => {
+    const [ lng, lat ] = point.geometry.coordinates;
+    const { name, rating } = point.properties;
 
+    new mapboxgl.Popup({ closeButton: false })
+      .setLngLat([ lng, lat ])
+      .setText(`${name}, рейтинг: ${rating}`)
+      .addTo(map);
   };
 
   useEffect(() => {
@@ -44,6 +51,8 @@ export default function Map() {
       });
 
       map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+
+      setMap(map);
     });
 
     map.on('move', () => {
@@ -54,19 +63,26 @@ export default function Map() {
       });
     });
 
-    points.forEach((point) => {
-      const [ lng, lat ] = point.geometry.coordinates;
-      const { name, rating } = point.properties;
-      const popup = new mapboxgl.Popup({ closeButton: false }).setText(`${name}, рейтинг: ${rating}`);
-
-      new mapboxgl.Marker()
-        .setLngLat([ lng, lat ])
-        .setPopup(popup)
-        .addTo(map);
-    });
-
-      return () => map.remove();
+    return () => map.remove();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (map) {
+      points.forEach((point) => {
+        const [ lng, lat ] = point.geometry.coordinates;
+        const { name, rating } = point.properties;
+        
+        const popup = new mapboxgl.Popup({ closeButton: false })
+          .setText(`${name}, рейтинг: ${rating}`);
+
+        new mapboxgl.Marker()
+          .setLngLat([ lng, lat ])
+          .setPopup(popup)
+          .addTo(map);
+      });
+    }
+    return;
+  }, [map, points]);
 
   return (
     <div className="map">
