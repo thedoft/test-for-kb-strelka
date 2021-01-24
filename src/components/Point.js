@@ -9,7 +9,7 @@ export default function Point(props) {
 
   return (
     <li className="point">
-      <p onClick={handleClick}>{name}, рейтинг: {rating}</p>
+      <p tabIndex={props.index} onClick={handleClick} onBlur={handleClick}>{name}, рейтинг: {rating}</p>
     </li>
   );
 }

@@ -21,13 +21,7 @@ export default function Map() {
   });
 
   const handlePointClick = (point) => {
-    const [ lng, lat ] = point.geometry.coordinates;
-    const { name, rating } = point.properties;
-
-    new mapboxgl.Popup({ closeButton: false })
-      .setLngLat([ lng, lat ])
-      .setText(`${name}, рейтинг: ${rating}`)
-      .addTo(map);
+    point.marker.togglePopup();
   };
 
   useEffect(() => {
@@ -71,14 +65,16 @@ export default function Map() {
       points.forEach((point) => {
         const [ lng, lat ] = point.geometry.coordinates;
         const { name, rating } = point.properties;
-        
+
         const popup = new mapboxgl.Popup({ closeButton: false })
           .setText(`${name}, рейтинг: ${rating}`);
 
-        new mapboxgl.Marker()
+        const marker = new mapboxgl.Marker()
           .setLngLat([ lng, lat ])
           .setPopup(popup)
           .addTo(map);
+
+        point.marker = marker;
       });
     }
     return;
