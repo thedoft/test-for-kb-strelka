@@ -26,6 +26,14 @@ export default function Map() {
     point.marker.togglePopup();
   };
 
+  const handlePointBlur = (point) => {
+    const popup = point.marker.getPopup();
+
+    if (popup.isOpen()) {
+      point.marker.togglePopup();
+    }
+  };
+
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: mapContainer.current,
@@ -64,7 +72,7 @@ export default function Map() {
 
   useEffect(() => {
     if (map) {
-      points.forEach((point) => {
+      points.forEach((point, index) => {
         const [ lng, lat ] = point.geometry.coordinates;
         const { name, rating } = point.properties;
 
@@ -91,7 +99,7 @@ export default function Map() {
             <button className="button map__back-button">Назад</button>
           </NavLink>
         </div>
-        <PointList points={points} onPointClick={handlePointClick} />
+        <PointList points={points} onPointClick={handlePointClick} onPointBlur={handlePointBlur} />
       </div>
 
       <div className="map__right-column" ref={mapContainer}>
