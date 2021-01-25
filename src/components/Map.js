@@ -12,6 +12,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoidGhlZG9mdCIsImEiOiJja2thMjl0aGwwMG9yMndwaWY4M
 
 export default function Map() {
   const points = pointCollection.features;
+  const [markers, setMarkers] = useState([]);
 
   const mapContainer = useRef(null);
 
@@ -23,15 +24,13 @@ export default function Map() {
   });
 
   const handlePointClick = (point) => {
-    point.marker.togglePopup();
-  };
+    const openedPopupMarker = markers.find((marker) => marker.getPopup().isOpen());
 
-  const handlePointBlur = (point) => {
-    const popup = point.marker.getPopup();
-
-    if (popup.isOpen()) {
-      point.marker.togglePopup();
+    if (openedPopupMarker) {
+      openedPopupMarker.togglePopup();
     }
+
+    point.marker.togglePopup();
   };
 
   useEffect(() => {
@@ -72,7 +71,7 @@ export default function Map() {
 
   useEffect(() => {
     if (map) {
-      points.forEach((point, index) => {
+      points.forEach((point) => {
         const [ lng, lat ] = point.geometry.coordinates;
         const { name, rating } = point.properties;
 
@@ -85,6 +84,7 @@ export default function Map() {
           .addTo(map);
 
         point.marker = marker;
+        setMarkers(markers => [...markers, marker]);
       });
     }
     return;
@@ -99,7 +99,7 @@ export default function Map() {
             <button className="button map__back-button">Назад</button>
           </NavLink>
         </div>
-        <PointList points={points} onPointClick={handlePointClick} onPointBlur={handlePointBlur} />
+        <PointList points={points} onPointClick={handlePointClick} />
       </div>
 
       <div className="map__right-column" ref={mapContainer}>

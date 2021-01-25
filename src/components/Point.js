@@ -7,17 +7,9 @@ export default function Point(props) {
     props.onClick(props.point);
   };
 
-  const handleBlur = () => {
-    props.onBlur(props.point);
-  };
-
   return (
     <li className="point">
-      <p className="point__place-name"
-        tabIndex={props.index}
-        onClick={handleClick}
-        onBlur={handleBlur}
-      >
+      <p className="point__place-name" onClick={handleClick}>
         {name}, рейтинг: <b>{rating}</b>
       </p>
     </li>
