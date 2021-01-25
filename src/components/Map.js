@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
-import mapboxgl from 'mapbox-gl';
+import mapboxgl from 'mapbox-gl/dist/mapbox-gl';
+import MapboxWorker from 'mapbox-gl/dist/mapbox-gl-csp-worker';
 
 import PointList from './PointList';
 
 import * as pointCollection from '../points.json';
 
+mapboxgl.workerClass = MapboxWorker;
 mapboxgl.accessToken = 'pk.eyJ1IjoidGhlZG9mdCIsImEiOiJja2thMjl0aGwwMG9yMndwaWY4M2ptZHBvIn0.8EEq1Pq2hDrZUuIlupJBdQ';
 
 export default function Map() {
